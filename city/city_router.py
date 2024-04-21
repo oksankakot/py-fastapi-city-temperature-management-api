@@ -47,7 +47,7 @@ async def read_cities(
     limit: int = 10,
     db: Session = Depends(get_db)
 ):
-    cities = await crud.get_all_cities(db)
+    cities = await crud.get_cities_with_pagination(db, skip=skip, limit=limit)
     return cities
 
 

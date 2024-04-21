@@ -26,9 +26,10 @@ async def get_temperature_by_id(temperature_id: int, db: Session = Depends(get_d
     return temperature
 
 
-@router.post("/", response_model=schemas.Temperature)
+@router.post("/", response_model=schemas.Temperature, status_code=status.HTTP_201_CREATED)
 async def create_temperature(temperature: schemas.TemperatureCreate, db: Session = Depends(get_db)):
     return await crud.create_temperature(db=db, temperature=temperature)
+
 
 
 @router.put("/{temperature_id}", response_model=schemas.Temperature)
@@ -39,7 +40,7 @@ async def update_temperature(temperature_id: int, temperature: schemas.Temperatu
     return updated_temperature
 
 
-@router.delete("/{temperature_id}", response_model=schemas.Temperature)
+@router.delete("/{temperature_id}", response_model=schemas.Temperature, status_code=status.HTTP_204_NO_CONTENT)
 async def delete_temperature(temperature_id: int, db: Session = Depends(get_db)):
     deleted_temperature = await crud.delete_temperature(db=db, temperature_id=temperature_id)
     if deleted_temperature is None:

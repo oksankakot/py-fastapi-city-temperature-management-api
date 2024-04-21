@@ -1,4 +1,5 @@
 import os
+import sys
 from datetime import datetime
 
 import httpx
@@ -33,11 +34,16 @@ async def fetch_weather(city_name: str) -> dict:
 
 
 async def main():
-    city_name = "London"  # Замените "London" на желаемый город
+    if len(sys.argv) < 2:
+        print("Usage: python temp_script.py <city_name>")
+        sys.exit(1)
+
+    city_name = sys.argv[1]
     weather_data = await fetch_weather(city_name)
     print(f"Weather in {city_name}:")
     print(f"Temperature: {weather_data['temperature']}°C")
     print(f"Local time: {weather_data['datetime']}")
+
 
 if __name__ == "__main__":
     import asyncio
